@@ -15,6 +15,8 @@ to them.
 import pygame
 from tree_data import FileSystemTree
 from population import PopulationTree
+import os
+import sys
 
 
 # Screen dimensions and coordinates
@@ -160,6 +162,15 @@ def run_treemap_population():
 
 
 if __name__ == '__main__':
+    # Uncomment the following 2 lines to run PythonTA, which runs a few tests.
     # import python_ta
     # python_ta.check_all(config='pylintrc.txt')
-    run_treemap_population()
+
+    if len(sys.argv) < 2 or sys.argv[1] not in ['population', 'filesystem']:
+        print('Usage: python {} [population|filesystem]'.format(sys.argv[0]))
+        exit(1)
+    elif sys.argv[1] == 'filesystem':
+        # Runs the file system treemap on the parent directory of your working directory.
+        run_treemap_file_system(os.path.abspath(os.path.join(os.getcwd(), os.pardir)))
+    else:
+        run_treemap_population()
